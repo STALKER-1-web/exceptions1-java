@@ -42,9 +42,17 @@ public class Reservation {
 		long diff = checkOut.getTime() - checkIn.getTime();
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
-	public void upDateDate(Date checkIn, Date checkOut) {
+	public String upDateDate(Date checkIn, Date checkOut) {//deixa de ser void para retornar (String)mensagem
+		Date now = new Date();
+		if(checkIn.before(now)||checkOut.before(now)) {//se entrada ou saida forem antes(before)de agora 
+			return " Reservations dates for must be future dates.";
+		}
+		else if(!checkOut.after(checkIn)) {//se checkOut !não for depois de checkIn(em portugues claro: se a saida for antes da entrada)
+			return "Check-out date must be after check-in date.";
+		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		return null;//se retornar nulo é pq as falhas não ocorreram
 		
 	}
 
